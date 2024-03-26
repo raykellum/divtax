@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using DWNet.Data;
 using TaxabilityWebAPI.Services;
 using System.Threading.Tasks;
 using System.Threading;
@@ -10,27 +11,26 @@ using TaxabilityWebAPI.Models;
 
 namespace TaxabilityWebAPI.Controllers
 {
-    //[Route("api/[controller]/[action]")]
     [Route("api/[controller]")]
 	[ApiController]
-	public class TaxRulesController : ControllerBase
+	public class JWTaxRulesController : ControllerBase
     {
-        private readonly ITaxRulesService _itaxrulesservice;
+        private readonly IJWTaxRulesService _ijwtaxrulesservice;
 
-        public TaxRulesController(ITaxRulesService itaxrulesservice)
+        public JWTaxRulesController(IJWTaxRulesService ijwtaxrulesservice)
         {
-            _itaxrulesservice = itaxrulesservice;
+            _ijwtaxrulesservice = ijwtaxrulesservice;
         }
     
-        //GET api/TaxRules/Retrieve/{s_state_id}
+        //GET api/JWTaxRules/Retrieve/{s_state_id}
         [HttpGet("{s_state_id}")]
-        [ProducesResponseType(typeof(IEnumerable<TaxRules>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IDataStore<JWTaxRules>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<TaxRules>>> RetrieveAsync(string s_state_id)
+        public async Task<ActionResult<IDataStore<JWTaxRules>>> RetrieveAsync(string s_state_id)
         {
             try
             {
-                var result = await _itaxrulesservice.RetrieveAsync(s_state_id, default);
+                var result = await _ijwtaxrulesservice.RetrieveAsync(s_state_id, default);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -39,15 +39,15 @@ namespace TaxabilityWebAPI.Controllers
             }
         }
 
-        ////POST api/TaxRules/Create
+        ////POST api/JWTaxRules/Create
         //[HttpPost]
         //[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<ActionResult<int>> CreateAsync([FromBody] TaxRules TaxRules)
+        //public async Task<ActionResult<int>> CreateAsync([FromBody] JWTaxRules JWTaxRules)
         //{
         //    try
         //    {
-        //        var result = await _itaxrulesservice.CreateAsync(TaxRules, default);
+        //        var result = await _ijwtaxrulesservice.CreateAsync(JWTaxRules, default);
         //        return Ok(result);
         //    }
         //    catch (Exception ex)

@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ITaxabilityService, TaxabilityService>();
 builder.Services.AddScoped<IVertexRatesService, VertexRatesService>();
 builder.Services.AddScoped<ITaxRulesService, TaxRulesService>();
-
+builder.Services.AddScoped<IJWTaxRulesService, JWTaxRulesService>();
 
 // Add services to the container.
 builder.Services.AddDataContext<MSSDataContext>(m => m.UseSqlServer(builder.Configuration, "il095-dwwinbiddb-001.database.windows.net.sf_poc"));
